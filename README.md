@@ -1,2 +1,3 @@
-# Cnu_Schedule_Maker
-Cnu_Schedule_Maker is a tool that will create a schedule for you based on what classes you want to take, it will also tell you your finals schedule with the schedule it suggests
+# Final Schedule Maker
+
+This is a python project that generates your CNU final schedule by only entering your class CRN and suggested study times based on your confidence in the class, your grade, and your grade needed to achieve your desired grade.
