@@ -3,7 +3,7 @@ from File_Managment import *
 
 # Returns all courses that contain the string class_name in their registration name (ABCD 123).
 # For example, searching using 'CPSC 4' should return all 400-level CPSC courses.
-def get_classes_by_name (courses, class_name):
+def get_classes_by_name(courses, class_name):
     found_courses = []
     for course in courses:
         if class_name in course:
@@ -13,7 +13,7 @@ def get_classes_by_name (courses, class_name):
 
 # Returns the registration name (ABCD 123) of the class with the CRN inputted into the function.
 # If the CRN is invalid, the function returns 'NONE'.
-def get_classes_by_crn (crns, courses, class_crn):
+def get_classes_by_crn(crns, courses, class_crn):
     found_course = "NONE"
     for index in range(len(crns)):
         if class_crn == int(crns[index]):
@@ -35,6 +35,28 @@ def filter_classes_by_day (courses, days, day_string):
                 filtered_courses.append(courses[index])
                 break
     return filtered_courses
+
+
+# Iterates through courses and returns only classes that satisfy an LLC.
+# If llc_area is specified, the function will return only courses with that specific LLC (ex. AINW).
+def filter_by_llc(courses, llc_area=''):
+    pass
+
+
+# Iterates through courses and returns only classes with the teacher if exclude = False.
+# If exclude = True, the function filters out classes with the teacher and returns everything else.
+def filter_by_teacher(courses, teacher_name, exclude=False):
+    pass
+
+
+# Iterates through courses and returns only classes within the time range start - end.
+def filter_by_time(courses, start, end):
+    pass
+
+
+# Iterates through courses and returns only classes with open slots left.
+def filter_open_classes(courses):
+    pass
 
 
 if __name__ == "__main__":
