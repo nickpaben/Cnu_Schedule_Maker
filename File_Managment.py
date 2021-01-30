@@ -85,8 +85,9 @@ def get_name(crn):
     crn_list, course, title, credit_hours, days, time = get_data(os.path.join("Data", course_list))
     index = -1
     for crns in range(len(crn_list)):
-        if crn_list[crns] == crn:
+        if int(crn_list[crns]) == crn:
             index = crns
+            print(index)
     return course[index]
 
 
@@ -190,7 +191,7 @@ def get_final_time(class_time, crn):
 
 
 if __name__ == "__main__":
-    # print(get_final_time("M 2000", 8013))
-    get_data("Data/ScheduleOfClasses2020f.csv")
-    print(get_name(9001))
+    print(get_final_time("M 2000", 8016))
+    # get_data("Data/ScheduleOfClasses2020f.csv")
+    print(get_name(8781))
 

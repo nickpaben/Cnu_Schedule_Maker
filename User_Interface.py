@@ -2,7 +2,7 @@ from File_Managment import *
 from tkinter import *
 from Final import *
 import os
-# import numpy as np
+import numpy as np
 # from PIL import Image
 import popup
 
