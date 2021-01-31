@@ -3,6 +3,17 @@ import os
 
 course_list = 'ScheduleOfClasses2020f.csv'
 
+# Gets the list of CRNs from the schedule of classes CSV file.
+def get_crns(path):
+    crns = []
+
+    with open(path, 'rt') as file:
+        data = csv.reader(file)
+        for line in data:
+            if line[0] != 'CRN':
+                crns.append(line[0])
+    return crns
+
 
 # Gets course data from file path and stores the class data to lists.
 def get_data(path):

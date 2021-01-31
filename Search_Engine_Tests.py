@@ -8,30 +8,34 @@ class Search_Engine_Tests(unittest.TestCase):
         self.assertEqual(test_course.course, "COMM 415")
 
     def test_get_class_by_crn_invalid(self):
-        funny_number = 69
-        test_course = get_class_by_crn(funny_number)
-        default_course = Course_Section(funny_number)
+        invalid_crn = 69
+        test_course = get_class_by_crn(invalid_crn)
+        default_course = Course_Section(invalid_crn)
         self.assertEqual(test_course, default_course)
 
     def test_get_classes_by_name_chem(self):
-        test_courses = ["HONR 150", "HONR 167", "HONR 280", "CHEM 420", "CHEM 420L"]
-        courses = get_classes_by_name(test_courses, "CHEM 420")
-        self.assertEqual(courses, ["CHEM 420", "CHEM 420L"])
+        test_courses = ["HONR 100", "HONR 307", "HONR 338", "CHEM 401", "CHEM 401L"]
+        test_crns = [8305, 8308, 9312, 9217, 9218]
+        courses = get_classes_by_name(test_courses, test_crns, "CHEM 401")
+        self.assertEqual(courses, [Course_Section(9217), Course_Section(9218)])
 
     def test_get_classes_by_name_none_found(self):
-        test_courses = ["HONR 150", "HONR 167", "HONR 280", "CHEM 420", "CHEM 420L"]
-        courses = get_classes_by_name(test_courses, "THEA")
+        test_courses = ["HONR 100", "HONR 307", "HONR 338", "CHEM 401", "CHEM 401L"]
+        test_crns = [8305, 8308, 9312, 9217, 9218]
+        courses = get_classes_by_name(test_courses, test_crns, "THEA")
         self.assertEqual(courses, [])
 
     def test_get_classes_by_name_honors(self):
-        test_courses = ["HONR 150", "HONR 167", "HONR 280", "CHEM 420", "CHEM 420L"]
-        courses = get_classes_by_name(test_courses, "HONR")
-        self.assertEqual(courses, ["HONR 150", "HONR 167", "HONR 280"])
+        test_courses = ["HONR 100", "HONR 307", "HONR 338", "CHEM 401", "CHEM 401L"]
+        test_crns = [8305, 8308, 9312, 9217, 9218]
+        courses = get_classes_by_name(test_courses, test_crns, "HONR")
+        self.assertEqual(courses, [Course_Section(8305), Course_Section(8308), Course_Section(9312)])
 
-    def test_get_classes_by_name_honors_100_level(self):
-        test_courses = ["HONR 150", "HONR 167", "HONR 280", "CHEM 420", "CHEM 420L"]
-        courses = get_classes_by_name(test_courses, "HONR 1")
-        self.assertEqual(courses, ["HONR 150", "HONR 167"])
+    def test_get_classes_by_name_honors_300_level(self):
+        test_courses = ["HONR 100", "HONR 307", "HONR 338", "CHEM 401", "CHEM 401L"]
+        test_crns = [8305, 8308, 9312, 9217, 9218]
+        courses = get_classes_by_name(test_courses, test_crns, "HONR 3")
+        self.assertEqual(courses, [Course_Section(8308), Course_Section(9312)])
 
     def test_filter_classes_by_day(self):
         test_courses = [Course_Section(8013), Course_Section(8014), Course_Section(8015)]

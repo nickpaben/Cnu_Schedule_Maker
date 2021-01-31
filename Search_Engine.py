@@ -1,13 +1,17 @@
+import os
+from File_Management import get_crns, course_list
 from Course_Section import Course_Section
 
 
 # Returns all courses that contain the string class_name in their registration name (ABCD 123).
 # For example, searching using 'CPSC 4' should return all 400-level CPSC courses.
-def get_classes_by_name(courses, class_name):
+def get_classes_by_name(courses, crns, class_name):
     found_courses = []
-    for course in courses:
+    for index in range(len(courses)):
+        course = courses[index]
         if class_name in course:
-            found_courses.append(course)
+            crn = crns[index]
+            found_courses.append(Course_Section(crn))
     return found_courses
 
 
