@@ -1,10 +1,10 @@
-from File_Managment import *
+from File_Management import *
 from tkinter import *
 from Final import *
 import os
 import numpy as np
 # from PIL import Image
-import popup
+import Popup
 
 
 class UserInterface:
@@ -88,7 +88,7 @@ class UserInterface:
 
 
     def show_schedule(self):
-        popup.OldSchedule()
+        Popup.OldSchedule()
 
     def new(self):
         pass
@@ -124,7 +124,7 @@ class UserInterface:
             for finals in self.list_of_finals:
                 if finals == new_final:
                     conflict = True
-                    popup.ErrorMessage("You have a finals scheduling conflict with the classes {} and {}. Contact a "
+                    Popup.ErrorMessage("You have a finals scheduling conflict with the classes {} and {}. Contact a "
                                        "teacher from one of these classes to get your final time changed".format(
                                         finals.get_name().upper(), new_final.get_name().upper()))
             if not conflict:
@@ -138,7 +138,7 @@ class UserInterface:
                                                                               len(self.list_of_finals) - 1))
 
         else:
-            popup.ErrorMessage(crn + " is an Invalid Crn")
+            Popup.ErrorMessage(crn + " is an Invalid Crn")
 
     def draw_final_Home_view(self, pos, color, final_index):
         if pos[0] == 'M':

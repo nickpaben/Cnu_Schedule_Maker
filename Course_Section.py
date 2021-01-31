@@ -1,4 +1,4 @@
-from File_Managment import *
+from File_Management import *
 
 
 class Course_Section:
