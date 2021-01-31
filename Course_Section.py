@@ -6,6 +6,7 @@ class Course_Section:
     # the class's information based on the CRN.
     def __init__(self, crn):
         if crn_is_valid(crn):
+            self.crn = crn
             self.course, self.section, self.title, self.hours, self.llc, self.days, \
                 self.time, self.location, self.instructor, self.available_seats = get_class_data_from_crn(crn)
         else:
@@ -30,6 +31,10 @@ class Course_Section:
     # Example: CPSC255-1 - Programming for Applications
     def __str__(self):
         return self.course + "-" + str(self.section) + " - " + self.title
+
+    # Compares this object to another course; returns True if CRNs are equal
+    def __eq__(self, other):
+        return self.crn == other.crn
 
 
 if __name__ == "__main__":

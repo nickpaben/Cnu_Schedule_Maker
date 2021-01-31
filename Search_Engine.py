@@ -31,11 +31,16 @@ def filter_classes_by_day(courses, day_string):
 
 # Iterates through courses and returns only classes that satisfy an LLC.
 # If llc_area is specified, the function will return only courses with that specific LLC (ex. AINW).
-def filter_classes_by_llc(courses, llc_area=''):
+def filter_classes_by_llc(courses, llc_area=""):
     filtered_courses = []
     for course in courses:
-        if course.llc.strip() == llc_area.strip():
-            filtered_courses.append(course)
+        if llc_area != "":
+            if course.llc.strip() == llc_area.strip():
+                filtered_courses.append(course)
+        else:
+            if course.llc.strip() != "":
+                filtered_courses.append(course)
+
     return filtered_courses
 
 
