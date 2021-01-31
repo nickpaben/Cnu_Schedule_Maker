@@ -1,4 +1,5 @@
 from File_Managment import *
+from Course_Section import Course_Section
 
 
 # Returns all courses that contain the string class_name in their registration name (ABCD 123).
@@ -61,6 +62,7 @@ def filter_open_classes(courses):
 
 if __name__ == "__main__":
     crns, courses, titles, credit_hours, days, times = get_data("Data/ScheduleOfClasses2020f.csv")
-    print(get_classes_by_name(courses, "BIOL 4"))
-    print(get_classes_by_crn(crns, courses, 8120))
+    print("Search Test")
+    test_course_input = input("Enter a course name (ABCD 123) to search for: ")
+    print(get_classes_by_name(courses, test_course_input))
     print(filter_classes_by_day(courses, days, 'MTWF'))

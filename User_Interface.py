@@ -118,7 +118,7 @@ class UserInterface:
 
         crn = self.crn_box.get()
         self.crn_box.delete(0, END)
-        if check_crn_valid(crn):
+        if crn_is_valid(crn):
             new_final = Final(crn)
             conflict = False
             for finals in self.list_of_finals:
