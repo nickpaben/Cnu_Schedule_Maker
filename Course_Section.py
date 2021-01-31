@@ -7,7 +7,7 @@ class Course_Section:
     def __init__(self, crn):
         if crn_is_valid(crn):
             self.course, self.section, self.title, self.hours, self.llc, self.days, \
-                self.time, self.location, self.instructor, self.available_Seats = get_class_data_from_crn(crn)
+                self.time, self.location, self.instructor, self.available_seats = get_class_data_from_crn(crn)
         else:
             self.__set_defaults__()
 

@@ -1,4 +1,3 @@
-from File_Management import *
 from Course_Section import Course_Section
 
 
@@ -12,57 +11,66 @@ def get_classes_by_name(courses, class_name):
     return found_courses
 
 
-# Returns the registration name (ABCD 123) of the class with the CRN inputted into the function.
-# If the CRN is invalid, the function returns 'NONE'.
-def get_classes_by_crn(crns, courses, class_crn):
-    found_course = "NONE"
-    for index in range(len(crns)):
-        if class_crn == int(crns[index]):
-            found_course = courses[index]
-    return found_course
+# Returns a course object of the class with the CRN inputted into the function.
+def get_class_by_crn(class_crn):
+    return Course_Section(class_crn)
 
 
 # Iterates through courses provided and returns only the courses containing days in day_string.
 # day_string is a string containing all of the days to filter in - an example would be 'MTWF'.
-# Using this string, the program should return all of the classes provided except for ones on Thursday (R).
-# courses and days must be the same length for now - there's probably a better fix, but I'm not sure what
-# that is yet.
-# With the current way this is set up, searching 'MW' will also include 'MWF' classes - I need to fix that.
-def filter_classes_by_day (courses, days, day_string):
+# Using this string, the program should return all of the classes provided except for ones only on Thursday (R).
+def filter_classes_by_day(courses, day_string):
     filtered_courses = []
-    for index in range(len(courses)):
+    for course in courses:
         for day in day_string:
-            if day in days[index]:
-                filtered_courses.append(courses[index])
+            if day in course.days:
+                filtered_courses.append(course)
                 break
     return filtered_courses
 
 
 # Iterates through courses and returns only classes that satisfy an LLC.
 # If llc_area is specified, the function will return only courses with that specific LLC (ex. AINW).
-def filter_by_llc(courses, llc_area=''):
-    pass
+def filter_classes_by_llc(courses, llc_area=''):
+    filtered_courses = []
+    for course in courses:
+        if course.llc.strip() == llc_area.strip():
+            filtered_courses.append(course)
+    return filtered_courses
 
 
-# Iterates through courses and returns only classes with the teacher if exclude = False.
-# If exclude = True, the function filters out classes with the teacher and returns everything else.
-def filter_by_teacher(courses, teacher_name, exclude=False):
-    pass
+# Iterates through courses and returns only classes with the teacher if excluding_teacher = False.
+# If excluding_teacher = True, the function filters out classes with the teacher and returns everything else.
+def filter_classes_by_teacher(courses, teacher_name, excluding_teacher=False):
+    filtered_courses = []
+    for course in courses:
+        if course.instructor == teacher_name:
+            if not excluding_teacher:
+                filtered_courses.append(course)
+        else:
+            if excluding_teacher:
+                filtered_courses.append(course)
+    return filtered_courses
 
 
 # Iterates through courses and returns only classes within the time range start - end.
-def filter_by_time(courses, start, end):
-    pass
+def filter_classes_by_time(courses, start, end):
+    filtered_courses = []
+    for course in courses:
+        start_time, end_time = course.time.split("-")
+        if int(start_time) >= int(start) and int(end) >= int(end_time):
+            filtered_courses.append(course)
+    return filtered_courses
 
 
 # Iterates through courses and returns only classes with open slots left.
 def filter_open_classes(courses):
-    pass
+    filtered_courses = []
+    for course in courses:
+        if int(course.available_seats) > 0:
+            filtered_courses.append(course)
+    return filtered_courses
 
 
 if __name__ == "__main__":
-    crns, courses, titles, credit_hours, days, times = get_data("Data/ScheduleOfClasses2020f.csv")
-    print("Search Test")
-    test_course_input = input("Enter a course name (ABCD 123) to search for: ")
-    print(get_classes_by_name(courses, test_course_input))
-    print(filter_classes_by_day(courses, days, 'MTWF'))
+    pass
