@@ -53,12 +53,18 @@ def filter_classes_by_llc(courses, llc_area=""):
 def filter_classes_by_teacher(courses, teacher_name, excluding_teacher=False):
     filtered_courses = []
     for course in courses:
-        if course.instructor == teacher_name:
-            if not excluding_teacher:
-                filtered_courses.append(course)
-        else:
-            if excluding_teacher:
-                filtered_courses.append(course)
+        teacher_names = course.instructor.split(";")
+        is_teaching = False
+
+        for name in teacher_names:
+            if name.strip() == teacher_name.strip():
+                is_teaching = True
+        if is_teaching and not excluding_teacher:
+            filtered_courses.append(course)
+        if not is_teaching and excluding_teacher:
+            filtered_courses.append(course)
+    for f in filtered_courses:
+        print(f)
     return filtered_courses
 
 

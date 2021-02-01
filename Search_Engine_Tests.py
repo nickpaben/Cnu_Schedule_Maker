@@ -53,6 +53,11 @@ class Search_Engine_Tests(unittest.TestCase):
         courses = filter_classes_by_llc(test_courses, "LLFR")
         self.assertEqual(courses, [Course_Section(8008)])
 
+    def test_filter_classes_by_teacher_multiple_teachers(self):
+        test_courses = [Course_Section(8934), Course_Section(8935), Course_Section(8015)]
+        courses = filter_classes_by_teacher(test_courses, "Pollio, David")
+        self.assertEqual(courses, [Course_Section(8934), Course_Section(8935)])
+
     def test_filter_classes_by_teacher_include(self):
         test_courses = [Course_Section(8013), Course_Section(8014), Course_Section(8015)]
         courses = filter_classes_by_teacher(test_courses, "Almalag, Mohammad")
@@ -60,7 +65,7 @@ class Search_Engine_Tests(unittest.TestCase):
 
     def test_filter_classes_by_teacher_exclude(self):
         test_courses = [Course_Section(8013), Course_Section(8014), Course_Section(8015)]
-        courses = filter_classes_by_teacher(test_courses, "Almalag, Mohammad")
+        courses = filter_classes_by_teacher(test_courses, "Almalag, Mohammad", True)
         self.assertEqual(courses, [Course_Section(8013)])
 
     def test_filter_classes_by_time(self):
