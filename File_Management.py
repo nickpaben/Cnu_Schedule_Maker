@@ -3,6 +3,7 @@ import os
 
 course_list = 'ScheduleOfClasses2020f.csv'
 
+
 # Gets the list of CRNs from the schedule of classes CSV file.
 def get_crns(path):
     crns = []
@@ -73,7 +74,7 @@ def get_class_data_from_crn(input_crn):
                     instructor = line[10]
                     available_seats = line[11]
                     return course, section, title, credit_hours, llc_area, days, \
-                           time, location, instructor, available_seats
+                        time, location, instructor, available_seats
 
 
 # Get the name of a course with the inputted CRN.

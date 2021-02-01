@@ -57,7 +57,7 @@ def filter_classes_by_teacher(courses, teacher_name, excluding_teacher=False):
         is_teaching = False
 
         for name in teacher_names:
-            if name.strip() == teacher_name.strip():
+            if teacher_name.strip() in name.strip():
                 is_teaching = True
         if is_teaching and not excluding_teacher:
             filtered_courses.append(course)

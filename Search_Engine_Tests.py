@@ -55,17 +55,17 @@ class Search_Engine_Tests(unittest.TestCase):
 
     def test_filter_classes_by_teacher_multiple_teachers(self):
         test_courses = [Course_Section(8934), Course_Section(8935), Course_Section(8015)]
-        courses = filter_classes_by_teacher(test_courses, "Pollio, David")
+        courses = filter_classes_by_teacher(test_courses, "Pollio")
         self.assertEqual(courses, [Course_Section(8934), Course_Section(8935)])
 
     def test_filter_classes_by_teacher_include(self):
         test_courses = [Course_Section(8013), Course_Section(8014), Course_Section(8015)]
-        courses = filter_classes_by_teacher(test_courses, "Almalag, Mohammad")
+        courses = filter_classes_by_teacher(test_courses, "Almalag")
         self.assertEqual(courses, [Course_Section(8014), Course_Section(8015)])
 
     def test_filter_classes_by_teacher_exclude(self):
         test_courses = [Course_Section(8013), Course_Section(8014), Course_Section(8015)]
-        courses = filter_classes_by_teacher(test_courses, "Almalag, Mohammad", True)
+        courses = filter_classes_by_teacher(test_courses, "Almalag", True)
         self.assertEqual(courses, [Course_Section(8013)])
 
     def test_filter_classes_by_time(self):
