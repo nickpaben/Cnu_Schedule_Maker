@@ -1,5 +1,4 @@
 import os
-from File_Management import get_crns, course_list
 from Course_Section import Course_Section
 
 

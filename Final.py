@@ -269,5 +269,4 @@ class ManualFinal:
 
 
 if __name__ == "__main__":
-    test_crns, test_courses, test_titles, test_credit_hours, test_days, test_times = get_data(os.path.join('Data', "ScheduleOfClasses2020f.csv"))
     Final('9001')

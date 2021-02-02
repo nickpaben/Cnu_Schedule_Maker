@@ -1,7 +1,7 @@
 import csv
 import os
 
-course_list = 'ScheduleOfClasses2020f.csv'
+course_list_path = 'ScheduleOfClasses2020f.csv'
 
 
 # Gets the list of CRNs from the schedule of classes CSV file.
@@ -14,6 +14,18 @@ def get_crns(path):
             if line[0] != 'CRN':
                 crns.append(line[0])
     return crns
+
+
+# Gets the list of course names from the schedule of classes CSV file.
+def get_courses(path):
+    courses = []
+
+    with open(path, 'rt') as file:
+        data = csv.reader(file)
+        for line in data:
+            if line[1] != 'Course':
+                courses.append(line[1])
+    return courses
 
 
 # Gets course data from file path and stores the class data to lists.
@@ -80,7 +92,8 @@ def get_class_data_from_crn(input_crn):
 # Get the name of a course with the inputted CRN.
 # If there is no course with the CRN, returns the string "Not Found".
 def get_name(crn):
-    crn_list, course, title, credit_hours, days, time = get_data(os.path.join("Data", course_list))
+    crn_list = get_crns(os.path.join("Data", course_list_path))
+    course_list = get_courses(os.path.join("Data", course_list_path))
     index = -1
     for crns in range(len(crn_list)):
         if int(crn_list[crns]) == crn:
@@ -88,12 +101,12 @@ def get_name(crn):
     if index == -1:
         return "Not Found"
     else:
-        return course[index]
+        return course_list[index]
 
 
 # Checks to see if the CRN is valid - returns True/False if CRN is valid/invalid.
 def crn_is_valid(input_crn):
-    crn_list, course, title, credit_hours, days, time = get_data(os.path.join("Data", course_list))
+    crn_list = get_crns(os.path.join("Data", course_list_path))
     for crn in crn_list:
         if int(crn) == input_crn:
             return True
