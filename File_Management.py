@@ -78,14 +78,17 @@ def get_class_data_from_crn(input_crn):
 
 
 # Get the name of a course with the inputted CRN.
-# If there is no course with the CRN, returns the name of the last course in the CSV file. (fix this)
+# If there is no course with the CRN, returns the string "Not Found".
 def get_name(crn):
     crn_list, course, title, credit_hours, days, time = get_data(os.path.join("Data", course_list))
     index = -1
     for crns in range(len(crn_list)):
         if int(crn_list[crns]) == crn:
             index = crns
-    return course[index]
+    if index == -1:
+        return "Not Found"
+    else:
+        return course[index]
 
 
 # Checks to see if the CRN is valid - returns True/False if CRN is valid/invalid.
