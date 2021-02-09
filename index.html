@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+    <title>Schedule Maker Test Demo</title>
+    <head>
+        <div id = "header-bar">
+            <img id = "cnu-logo" src="cnu_logo_150_x_60.png"></img>
+        </div>
+    </head>
+    <body>
+        <script>
+            let createClass = (id, name, time, length, days) => {
+                let course = { id: id, name: name, time: time, length: length, days: days };
+                return course;
+            }
+
+            let days = ["M", "T", "W", "R", "F"];
+
+            let courses = [
+                createClass(1, "SPAN 101", 8, 5/6, [1, 3, 5]),
+                createClass(2, "HIST 121", 11, 5/4, [2, 4]),
+                createClass(3, "ENGL 223", 18, 5/4, [1, 3]),
+                createClass(4, "CHEM 420", 14, 5/6, [1, 3, 5]),
+                createClass(5, "CHEM 420L", 8, 3, [2]),
+                createClass(6, "HONR 100", 13, 5/4, [2, 4]),
+                createClass(7, "ENGR 214", 10, 5/6, [1, 3, 5]),
+                createClass(8, "MUSC 100", 13, 5/6, [1]),
+                createClass(9, "PHYS 201", 8, 5/6, [1, 3, 5]),
+                createClass(10, "PHYS 201", 8, 5/4, [2, 4]),
+                createClass(11, "PHYS 201L", 9, 3, [3]),
+            ];
+
+            let schedule = {
+                courses: [],
+                overlapsWithCourse: function(course) {
+                    for (let i = 0; i < this.courses.length; i++) {
+                        if ((this.courses[i].time <= course.time && course.time <= this.courses[i].time + this.courses[i].length)
+                            || (this.courses[i].time <= course.time + course.length && course.time + course.length <= this.courses[i].time + this.courses[i].length)
+                            || (course.time < this.courses[i].time && this.courses[i].time + this.courses[i].length < course.time + course.length)) {
+                                for (let j = 0; j < this.courses[i].days.length; j++) {
+                                    for (let k = 0; k < course.days.length; k++) {
+                                        if (this.courses[i].days[j] == course.days[k]) {
+                                            return true;
+                                        }
+                                    }
+                                }
+                        }
+                    }
+
+                    return false;
+                }
+            };
+
+            let listingNo = 1;
+
+            for(let i = 0; i < 5; i++) {
+                let newElement = document.createElement("p");
+                newElement.innerHTML = days[i];
+                newElement.style.position = "absolute";
+                newElement.style.right = 60 - (i * 10) + "%";
+                newElement.style.top = "5%";
+                newElement.style.fontSize = "15px";
+                document.body.appendChild(newElement);
+            }
+            for(let i = 0; i < 14; i++) {
+                let timeString = (i + 8) + ":00"
+                let newElement = document.createElement("p");
+                newElement.innerHTML = timeString;
+                newElement.style.position = "absolute";
+                newElement.style.right = 70 + "%";
+                newElement.style.top = 10 + (6 * i) + "%";
+                newElement.style.fontSize = "11px";
+                newElement.style.height = "6%";
+                document.body.appendChild(newElement);
+            }
+
+            for(let i = 0; i < 5; i++) {
+                let newElement = document.createElement("div");
+                newElement.style.position = "absolute";
+                newElement.style.width = "10%";
+                newElement.style.height = "85%";
+                newElement.style.right = 55 - (i * 10) + "%";
+                newElement.style.top = 10 + "%";
+                if (i != 4) {
+                    newElement.style.borderRight = "1px solid #44449e";
+                }
+
+                document.body.appendChild(newElement);
+            }
+
+            for(let i = 0; i < 14; i++) {
+                let newElement = document.createElement("div");
+                newElement.style.position = "absolute";
+                newElement.style.width = "60%";
+                newElement.style.height = "6%";
+                newElement.style.right = 9 + "%";
+                newElement.style.top = 6 + (6 * i) + "%";
+                newElement.style.borderBottom = "1px solid #44449e";
+
+
+                document.body.appendChild(newElement);
+            }
+
+            let createCourseInfoDIV = (name, time, length, day) => {
+                let courseInfoDiv1 = document.createElement("div");
+                courseInfoDiv1.className = "course-info";
+                courseInfoDiv1.style.height = (length * 6) + "%";
+                courseInfoDiv1.style.right = 65  - (day * 10) + "%";
+                courseInfoDiv1.style.top = 11 + ((time - 8) * 6) + "%";
+                courseInfoDiv1.onclick = () => {
+                    alert("SPAN 201\nMW 8:00-8:50\nLuter 233")
+                }
+
+                let courseName = document.createElement("p");
+                courseName.innerHTML = name;
+                courseName.style.marginTop = "5px";
+                courseName.style.marginBottom = "0px";
+
+                courseInfoDiv1.appendChild(courseName);
+
+                document.body.appendChild(courseInfoDiv1);
+
+                let courseTime = document.createElement("p");
+                courseTime.innerHTML = time + ":00";
+                courseTime.style.marginTop = "0px";                
+
+                courseInfoDiv1.appendChild(courseTime);
+
+                let exitButton = document.createElement("div");
+                exitButton.className = "course-info";
+                exitButton.style.height = "100%";
+                exitButton.style.width = "15px";
+                exitButton.style.top = "0px";
+                exitButton.style.right = "0px";
+                exitButton.style.backgroundColor = "#994444";
+                exitButton.onclick = () => {
+                    exitButton.parentElement.remove();
+                }
+                courseInfoDiv1.appendChild(exitButton);
+
+                document.body.appendChild(courseInfoDiv1);
+            }
+
+            let addCourseToSchedule = (id) => {
+                let course = courses[id - 1];
+                if(!schedule.overlapsWithCourse(course)) {
+                    for (let i = 0; i < course.days.length; i++) {
+                        createCourseInfoDIV(course.name, course.time, course.length, course.days[i]);
+                        schedule.courses.push(course);
+                    }
+                } else {
+                    alert("Schedule overlaps!");
+                }
+                
+            }
+
+            let addCourseToListing = (id) => {
+                let course = courses[id - 1];
+                let listing = document.createElement("p");
+                listing.innerHTML = course.name + " " + course.time + ":00 [" + course.days + "]";
+                listing.id = "listing-" + listingNo;
+                listing.style.position = "absolute";
+                listing.style.left = "15px";
+                listing.style.top = 45 + ((listingNo - 1) * 3) + "%";
+                listing.onclick = () => {
+                    addCourseToSchedule(id);
+                }
+
+                let courseContainer = document.getElementById("course-container");
+                courseContainer.appendChild(listing);
+                listingNo++;
+
+            }
+
+            let addCourse = () => {
+                let input = document.getElementById("crn-search");
+                let ID = input.value;
+                addCourseToListing(ID);
+            }
+
+        </script>
+        <style>
+            #course-container {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width: 25%;
+                height: 100%;
+                border-right: 1px solid #44449e;
+            }
+
+            .course-info {
+                position: absolute;
+                width: 9%;
+                font-size: 13px;
+                background-color: #aeaedb;
+                margin: 0.5%;
+            }
+
+            #cnu-logo {
+                position: absolute;
+                right: 0px;
+            }
+        </style>
+        <div id = "course-container">
+            Enter the CRN or registration name of your class here: <input id="crn-search" type="number"></input>
+            <button id="search_courses" onclick="addCourse()">Search</button>
+        </div>
+    </body>
+</html>
