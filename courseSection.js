@@ -22,8 +22,9 @@ let courseSection = () => {
         hours : 3,
         llc : "",
         days : "MWF",
-        time : 8,
+        startTime : 8,
         lengthMinutes: 50,
+        endTime : this.startTime + (this.lengthMinutes / 60),
         location : "LUTR 101",
         instructor : "Someone",
         available_seats : 24,
@@ -32,8 +33,8 @@ let courseSection = () => {
             return Math.floor(time) + ":" + ("00" + Math.floor(minutes)).slice(-2);
         },
         toString : function() {
-            return this.course + "-" + this.section + " - " + this.days + " " + this.timeString(this.time) + " - " 
-                + this.timeString(this.time + (this.lengthMinutes / 60));
+            return this.course + "-" + this.section + " - " + this.days + " " + this.timeString(this.startTime) + " - " 
+                + this.timeString(this.endTime);
         },
         equals : function(otherCourse) {
             return (this.crn === otherCourse.crn);
@@ -45,8 +46,9 @@ let courseSection = () => {
             this.title = title;
             this.hours = hours;
             this.days = days;
-            this.time = time;
+            this.startTime = time;
             this.lengthMinutes = lengthMinutes;
+            this.endTime = this.startTime + (this.lengthMinutes / 60);
             return this;
         }
     };

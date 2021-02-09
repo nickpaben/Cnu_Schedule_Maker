@@ -27,19 +27,27 @@
                 courses: [],
                 overlapsWithCourse: function(course) {
                     for (let i = 0; i < this.courses.length; i++) {
-                        if ((this.courses[i].time <= course.time && course.time <= this.courses[i].time + this.courses[i].lengthMinutes)
-                            || (this.courses[i].time <= course.time + course.lengthMinutes && course.time + course.lengthMinutes <= this.courses[i].time + this.courses[i].lengthMinutes)
-                            || (course.time < this.courses[i].time && this.courses[i].time + this.courses[i].lengthMinutes < course.time + course.lengthMinutes)) {
-                                for (let j = 0; j < this.courses[i].days.length; j++) {
-                                    for (let k = 0; k < course.days.length; k++) {
-                                        if (this.courses[i].days[j] == course.days[k]) {
-                                            return true;
-                                        }
-                                    }
-                                }
+                        if (this.courseTimesOverlap(this.courses[i], course)) {
+                            return this.courseDaysOverlap(this.courses[i], course);
                         }
                     }
 
+                    return false;
+                },
+                courseTimesOverlap: function(course1, course2) {
+                    if (course1.startTime <= course2.startTime && course2.startTime <= course1.endTime) { return true; }
+                    if (course1.startTime <= course2.endTime && course2.endTime <= course1.endTime) { return true; }
+                    if (course2.startTime < course1.startTime && course1.endTime < course2.endTime) { return true; }
+                    return false;
+                },
+                courseDaysOverlap: function(course1, course2) {
+                    for (let j = 0; j < course1.days.length; j++) {
+                        for (let k = 0; k < course2.days.length; k++) {
+                            if (course1.days[j] == course2.days[k]) {
+                                return true;
+                            }
+                        }
+                    }
                     return false;
                 }
             };
@@ -101,30 +109,7 @@
                 document.body.appendChild(newElement);
             }
 
-            /**let createCourseInfoDIV = (course) => {
-                let courseInfoDiv1 = document.createElement("div");
-                courseInfoDiv1.className = "course-info";
-                courseInfoDiv1.style.height = (course.lengthMinutes / 10) + "%";
-                courseInfoDiv1.style.right = 65  - (day * 10) + "%";
-                courseInfoDiv1.style.top = 11 + ((time - 8) * 6) + "%";
-                courseInfoDiv1.onclick = () => {
-                    alert("SPAN 201\nMW 8:00-8:50\nLuter 233");
-                }
-
-                let courseName = document.createElement("p");
-                courseName.innerHTML = name;
-                courseName.style.marginTop = "5px";
-                courseName.style.marginBottom = "0px";
-
-                courseInfoDiv1.appendChild(courseName);
-
-                document.body.appendChild(courseInfoDiv1);
-
-                let courseTime = document.createElement("p");
-                courseTime.innerHTML = time + ":00";
-                courseTime.style.marginTop = "0px";                
-
-                courseInfoDiv1.appendChild(courseTime);
+            /**
 
                 let exitButton = document.createElement("div");
                 exitButton.className = "course-info";
@@ -149,13 +134,13 @@
                             "position": "absolute",
                             "height": (course.lengthMinutes / 10) + "%",
                             "right": 65 - (dayOffset * 10) + "%",
-                            "top": 11 + ((course.time - 8) * 6) + "%",
+                            "top": 11 + ((course.startTime - 8) * 6) + "%",
                         },
                     }).attr('class', 'course-info').click(function() {
                         alert(
                                 course.course + "-" + course.section + "\n"
-                                    + course.days + " " + course.timeString(course.time) + " - " 
-                                    + course.timeString(course.time + (course.lengthMinutes / 60)) + "\n"
+                                    + course.days + " " + course.timeString(course.startTime) + " - " 
+                                    + course.timeString(course.endTime) + "\n"
                                     + course.location + "\n" + course.llc
                             );
                     }).appendTo("body");
@@ -170,7 +155,7 @@
                         "css": {
                             "margin-top": "0px"
                         },
-                        "html": course.timeString(course.time)
+                        "html": course.timeString(course.startTime)
                     }).appendTo(container);
                 }
             }
