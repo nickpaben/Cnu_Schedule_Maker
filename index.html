@@ -8,11 +8,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src = "courseSection.js"></script>
         <script>
-            let createClass = (id, name, time, length, days) => {
-                let course = { id: id, name: name, time: time, length: length, days: days };
-                return course;
-            }
-
             let days = ["M", "T", "W", "R", "F"];
 
             let courses = [
@@ -32,9 +27,9 @@
                 courses: [],
                 overlapsWithCourse: function(course) {
                     for (let i = 0; i < this.courses.length; i++) {
-                        if ((this.courses[i].time <= course.time && course.time <= this.courses[i].time + this.courses[i].length)
-                            || (this.courses[i].time <= course.time + course.length && course.time + course.length <= this.courses[i].time + this.courses[i].length)
-                            || (course.time < this.courses[i].time && this.courses[i].time + this.courses[i].length < course.time + course.length)) {
+                        if ((this.courses[i].time <= course.time && course.time <= this.courses[i].time + this.courses[i].lengthMinutes)
+                            || (this.courses[i].time <= course.time + course.lengthMinutes && course.time + course.lengthMinutes <= this.courses[i].time + this.courses[i].lengthMinutes)
+                            || (course.time < this.courses[i].time && this.courses[i].time + this.courses[i].lengthMinutes < course.time + course.lengthMinutes)) {
                                 for (let j = 0; j < this.courses[i].days.length; j++) {
                                     for (let k = 0; k < course.days.length; k++) {
                                         if (this.courses[i].days[j] == course.days[k]) {
@@ -106,14 +101,14 @@
                 document.body.appendChild(newElement);
             }
 
-            let createCourseInfoDIV = (course) => {
+            /**let createCourseInfoDIV = (course) => {
                 let courseInfoDiv1 = document.createElement("div");
                 courseInfoDiv1.className = "course-info";
                 courseInfoDiv1.style.height = (course.lengthMinutes / 10) + "%";
                 courseInfoDiv1.style.right = 65  - (day * 10) + "%";
                 courseInfoDiv1.style.top = 11 + ((time - 8) * 6) + "%";
                 courseInfoDiv1.onclick = () => {
-                    alert("SPAN 201\nMW 8:00-8:50\nLuter 233")
+                    alert("SPAN 201\nMW 8:00-8:50\nLuter 233");
                 }
 
                 let courseName = document.createElement("p");
@@ -144,15 +139,47 @@
                 courseInfoDiv1.appendChild(exitButton);
 
                 document.body.appendChild(courseInfoDiv1);
+            }**/
+
+            let createCourseInfoDIV = (course) => {
+                for(let i = 0; i < course.days.length; i++) {
+                    let dayOffset = 1 + "MTWRF".indexOf(course.days[i]);
+                    let container = $("<div/>", {
+                        "css": {
+                            "position": "absolute",
+                            "height": (course.lengthMinutes / 10) + "%",
+                            "right": 65 - (dayOffset * 10) + "%",
+                            "top": 11 + ((course.time - 8) * 6) + "%",
+                        },
+                    }).attr('class', 'course-info').click(function() {
+                        alert(
+                                course.course + "-" + course.section + "\n"
+                                    + course.days + " " + course.timeString(course.time) + " - " 
+                                    + course.timeString(course.time + (course.lengthMinutes / 60)) + "\n"
+                                    + course.location + "\n" + course.llc
+                            );
+                    }).appendTo("body");
+                    $("<p/>", {
+                        "css": {
+                            "margin-top": "5px",
+                            "margin-bottom": "0px"
+                        },
+                        "html": course.course
+                    }).appendTo(container);
+                    $("<p/>", {
+                        "css": {
+                            "margin-top": "0px"
+                        },
+                        "html": course.timeString(course.time)
+                    }).appendTo(container);
+                }
             }
 
             let addCourseToSchedule = (id) => {
                 let course = courses[id - 1];
                 if(!schedule.overlapsWithCourse(course)) {
-                    for (let i = 0; i < course.days.length; i++) {
-                        createCourseInfoDIV(course);
-                        schedule.courses.push(course);
-                    }
+                    schedule.courses.push(course);
+                    createCourseInfoDIV(course);
                 } else {
                     alert("Schedule overlaps!");
                 }
