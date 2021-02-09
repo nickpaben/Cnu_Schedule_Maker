@@ -37,6 +37,17 @@ let courseSection = () => {
         },
         equals : function(otherCourse) {
             return (this.crn === otherCourse.crn);
+        },
+        TEMP_SET_VARIABLES : function(crn, course, section, title, hours, days, time, lengthMinutes) {
+            this.crn = crn;
+            this.course = course;
+            this.section = section;
+            this.title = title;
+            this.hours = hours;
+            this.days = days;
+            this.time = time;
+            this.lengthMinutes = lengthMinutes;
+            return this;
         }
     };
     return defaultCourse;

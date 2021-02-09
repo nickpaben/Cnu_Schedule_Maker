@@ -16,17 +16,16 @@
             let days = ["M", "T", "W", "R", "F"];
 
             let courses = [
-                createClass(1, "SPAN 101", 8, 5/6, [1, 3, 5]),
-                createClass(2, "HIST 121", 11, 5/4, [2, 4]),
-                createClass(3, "ENGL 223", 18, 5/4, [1, 3]),
-                createClass(4, "CHEM 420", 14, 5/6, [1, 3, 5]),
-                createClass(5, "CHEM 420L", 8, 3, [2]),
-                createClass(6, "HONR 100", 13, 5/4, [2, 4]),
-                createClass(7, "ENGR 214", 10, 5/6, [1, 3, 5]),
-                createClass(8, "MUSC 100", 13, 5/6, [1]),
-                createClass(9, "PHYS 201", 8, 5/6, [1, 3, 5]),
-                createClass(10, "PHYS 201", 8, 5/4, [2, 4]),
-                createClass(11, "PHYS 201L", 9, 3, [3]),
+                courseSection().TEMP_SET_VARIABLES(1, "SPAN 101", 1, "test", 3, "MWF", 8, 50),
+                courseSection().TEMP_SET_VARIABLES(2, "SPAN 101", 2, "test", 3, "MWF", 10, 50),
+                courseSection().TEMP_SET_VARIABLES(3, "SPAN 101", 3, "test", 3, "TR", 9, 75),
+                courseSection().TEMP_SET_VARIABLES(4, "SPAN 102", 1, "test", 3, "TR", 11, 75),
+                courseSection().TEMP_SET_VARIABLES(5, "CHEM 122", 1, "test", 3, "MWF", 14, 50),
+                courseSection().TEMP_SET_VARIABLES(6, "CHEM 122", 2, "test", 3, "TR", 10, 75),
+                courseSection().TEMP_SET_VARIABLES(7, "CHEM 122L", 1, "test", 3, "R", 12, 180),
+                courseSection().TEMP_SET_VARIABLES(8, "PHYS 201", 1, "test", 3, "MWF", 8, 50),
+                courseSection().TEMP_SET_VARIABLES(9, "PHYS 201", 2, "test", 3, "MWF", 13, 50),
+                courseSection().TEMP_SET_VARIABLES(10, "PHYS 201L", 1, "test", 3, "W", 16, 180),
             ];
 
             let schedule = {
@@ -107,10 +106,10 @@
                 document.body.appendChild(newElement);
             }
 
-            let createCourseInfoDIV = (name, time, length, day) => {
+            let createCourseInfoDIV = (course) => {
                 let courseInfoDiv1 = document.createElement("div");
                 courseInfoDiv1.className = "course-info";
-                courseInfoDiv1.style.height = (length * 6) + "%";
+                courseInfoDiv1.style.height = (course.lengthMinutes / 10) + "%";
                 courseInfoDiv1.style.right = 65  - (day * 10) + "%";
                 courseInfoDiv1.style.top = 11 + ((time - 8) * 6) + "%";
                 courseInfoDiv1.onclick = () => {
@@ -151,7 +150,7 @@
                 let course = courses[id - 1];
                 if(!schedule.overlapsWithCourse(course)) {
                     for (let i = 0; i < course.days.length; i++) {
-                        createCourseInfoDIV(course.name, course.time, course.length, course.days[i]);
+                        createCourseInfoDIV(course);
                         schedule.courses.push(course);
                     }
                 } else {
@@ -163,7 +162,7 @@
             let addCourseToListing = (id) => {
                 let course = courses[id - 1];
                 let listing = document.createElement("p");
-                listing.innerHTML = course.name + " " + course.time + ":00 [" + course.days + "]";
+                listing.innerHTML = course.toString();
                 listing.id = "listing-" + listingNo;
                 listing.style.position = "absolute";
                 listing.style.left = "15px";
