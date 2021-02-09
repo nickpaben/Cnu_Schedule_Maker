@@ -22,12 +22,18 @@ let courseSection = () => {
         hours : 3,
         llc : "",
         days : "MWF",
-        time : "0800-0850",
+        time : 8,
+        lengthMinutes: 50,
         location : "LUTR 101",
         instructor : "Someone",
         available_seats : 24,
+        timeString : function(time) {
+            let minutes = (time % 1) * 60;
+            return Math.floor(time) + ":" + ("00" + Math.floor(minutes)).slice(-2);
+        },
         toString : function() {
-            return this.course + "-" + this.section + " - " + this.title;
+            return this.course + "-" + this.section + " - " + this.days + " " + this.timeString(this.time) + " - " 
+                + this.timeString(this.time + (this.lengthMinutes / 60));
         },
         equals : function(otherCourse) {
             return (this.crn === otherCourse.crn);
