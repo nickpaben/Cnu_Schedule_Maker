@@ -178,12 +178,13 @@
                 listing.id = "listing-" + listingNo;
                 listing.style.position = "absolute";
                 listing.style.left = "15px";
-                listing.style.top = 45 + ((listingNo - 1) * 3) + "%";
+                listing.style.top = 15 + ((listingNo - 1) * 20) + "px";
                 listing.onclick = () => {
                     addCourseToSchedule(id);
                 }
 
-                let courseContainer = document.getElementById("course-container");
+                let courseContainer = document.getElementById("course-listing");
+                courseContainer.scrollTop = courseContainer.scrollHeight;
                 courseContainer.appendChild(listing);
                 listingNo++;
 
@@ -206,6 +207,17 @@
                 border-right: 1px solid #44449e;
             }
 
+            #course-listing {
+                position: absolute;
+                left: 15px;
+                top: 40%;
+                width: 90%;
+                height: 25%;
+                border: 1px solid #44449e;
+                border-radius: 2px;
+                overflow: auto;
+            }
+
             .course-info {
                 position: absolute;
                 width: 9%;
@@ -222,6 +234,9 @@
         <div id = "course-container">
             Enter the CRN or registration name of your class here: <input id="crn-search" type="number"></input>
             <button id="search_courses" onclick="addCourse()">Search</button>
+            <div id = "course-listing">
+                Your courses:
+            </div>
         </div>
     </body>
 </html>
