@@ -21,7 +21,8 @@ class Course_Section:
         self.hours = 3
         self.llc = ""
         self.days = "MWF"
-        self.time = "0000-0050"
+        self.time = 8
+        self.lengthMinutes = 50
         self.location = "LUTR 101"
         self.instructor = "Someone"
         self.available_seats = 24

@@ -2,7 +2,6 @@
     <title>Schedule Maker Test Demo</title>
     <head>
         <div id = "header-bar">
-            <img id = "cnu-logo" src="cnu_logo_150_x_60.png"></img>
         </div>
     </head>
     <body>
@@ -53,15 +52,22 @@
 
             let listingNo = 1;
 
-            for(let i = 0; i < 5; i++) {
-                let newElement = document.createElement("p");
-                newElement.innerHTML = days[i];
-                newElement.style.position = "absolute";
-                newElement.style.right = 60 - (i * 10) + "%";
-                newElement.style.top = "5%";
-                newElement.style.fontSize = "15px";
-                document.body.appendChild(newElement);
+            let createInterface = () => {
+                for(let i = 0; i < 5; i++) {
+                    $("<p/>", {
+                        "html": days[i],
+                        "css": {
+                            "position": "absolute",
+                            "right": 60 - (i * 10) + "%",
+                            "top": "5%",
+                            "fontSize": "15px"
+                        }
+                    }).appendTo("body");
+                }
             }
+
+            createInterface();
+            
             for(let i = 0; i < 14; i++) {
                 let timeString = (i + 8) + ":00"
                 let newElement = document.createElement("p");
