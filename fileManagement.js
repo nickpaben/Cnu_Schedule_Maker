@@ -39,3 +39,15 @@ let errorHandler = (event) => {
         alert("File is unreadable.");
     }
 }
+
+let crnIsValid = (input) => {
+    let inputCRN = parseInt(input);
+    if (courseData.length === 0) { alert("The course database is empty!"); }
+    for (let i = 0; i < courseData.length; i++) {
+        let crn = courseData[i][0];
+        if (crn == inputCRN) {
+            return true;
+        }
+    }
+    return false;
+}

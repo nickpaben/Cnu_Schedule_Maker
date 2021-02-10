@@ -12,19 +12,6 @@
         <script>
             let days = ["M", "T", "W", "R", "F"];
 
-            let courses = [
-                courseSection().TEMP_SET_VARIABLES(1, "SPAN 101", 1, "test", 3, "MWF", 8, 50),
-                courseSection().TEMP_SET_VARIABLES(2, "SPAN 101", 2, "test", 3, "MWF", 10, 50),
-                courseSection().TEMP_SET_VARIABLES(3, "SPAN 101", 3, "test", 3, "TR", 9, 75),
-                courseSection().TEMP_SET_VARIABLES(4, "SPAN 102", 1, "test", 3, "TR", 11, 75),
-                courseSection().TEMP_SET_VARIABLES(5, "CHEM 122", 1, "test", 3, "MWF", 14, 50),
-                courseSection().TEMP_SET_VARIABLES(6, "CHEM 122", 2, "test", 3, "TR", 10, 75),
-                courseSection().TEMP_SET_VARIABLES(7, "CHEM 122L", 1, "test", 3, "R", 12, 180),
-                courseSection().TEMP_SET_VARIABLES(8, "PHYS 201", 1, "test", 3, "MWF", 8, 50),
-                courseSection().TEMP_SET_VARIABLES(9, "PHYS 201", 2, "test", 3, "MWF", 13, 50),
-                courseSection().TEMP_SET_VARIABLES(10, "PHYS 201L", 1, "test", 3, "W", 16, 180),
-            ];
-
             let schedule = {
                 courses: [],
                 overlapsWithCourse: function(course) {
@@ -162,8 +149,7 @@
                 }
             }
 
-            let addCourseToSchedule = (id) => {
-                let course = courses[id - 1];
+            let addCourseToSchedule = (course) => {
                 if(!schedule.overlapsWithCourse(course)) {
                     schedule.courses.push(course);
                     createCourseInfoDIV(course);
@@ -173,29 +159,30 @@
                 
             }
 
-            let addCourseToListing = (id) => {
-                let course = courses[id - 1];
-                let listing = document.createElement("p");
-                listing.innerHTML = course.toString();
-                listing.id = "listing-" + listingNo;
-                listing.style.position = "absolute";
-                listing.style.left = "15px";
-                listing.style.top = 15 + ((listingNo - 1) * 20) + "px";
-                listing.onclick = () => {
-                    addCourseToSchedule(id);
+            let addCourseToListing = (crn) => {
+                if (crnIsValid(crn)) {
+                    let course = courseSection(crn);
+                    let listing = document.createElement("p");
+                    listing.innerHTML = course.toString();
+                    listing.id = "listing-" + listingNo;
+                    listing.style.position = "absolute";
+                    listing.style.left = "15px";
+                    listing.style.top = 15 + ((listingNo - 1) * 20) + "px";
+                    listing.onclick = () => {
+                        addCourseToSchedule(course);
+                    }
+
+                    let courseContainer = document.getElementById("course-listing");
+                    courseContainer.scrollTop = courseContainer.scrollHeight;
+                    courseContainer.appendChild(listing);
+                    listingNo++;
                 }
-
-                let courseContainer = document.getElementById("course-listing");
-                courseContainer.scrollTop = courseContainer.scrollHeight;
-                courseContainer.appendChild(listing);
-                listingNo++;
-
             }
 
             let addCourse = () => {
                 let input = document.getElementById("crn-search");
-                let ID = input.value;
-                addCourseToListing(ID);
+                let CRN = input.value;
+                addCourseToListing(CRN);
             }
 
         </script>

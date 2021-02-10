@@ -13,8 +13,8 @@ class Course_Section:
             self.__set_defaults__()
 **/
 
-let courseSection = () => {
-    let defaultCourse = {
+let courseSection = (CRN) => {
+    let course = {
         crn : 0000,
         course : "ABCD 123",
         section : 1,
@@ -39,18 +39,9 @@ let courseSection = () => {
         equals : function(otherCourse) {
             return (this.crn === otherCourse.crn);
         },
-        TEMP_SET_VARIABLES : function(crn, course, section, title, hours, days, time, lengthMinutes) {
-            this.crn = crn;
-            this.course = course;
-            this.section = section;
-            this.title = title;
-            this.hours = hours;
-            this.days = days;
-            this.startTime = time;
-            this.lengthMinutes = lengthMinutes;
-            this.endTime = this.startTime + (this.lengthMinutes / 60);
-            return this;
-        }
     };
-    return defaultCourse;
+    if (crnIsValid(CRN)) {
+        course.crn = CRN;
+    }
+    return course;
 }
