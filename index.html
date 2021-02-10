@@ -5,7 +5,9 @@
         </div>
     </head>
     <body>
+        <!-- Using jQuery and jQuery CSV -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="fileManagement.js"></script>
         <script src = "courseSection.js"></script>
         <script>
             let days = ["M", "T", "W", "R", "F"];
@@ -197,7 +199,15 @@
             }
 
         </script>
+        <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
+        accept=".csv">
         <style>
+            #csvFileInput {
+                position: absolute;
+                top: 5px;
+                left: 40%;
+            }
+
             #course-container {
                 position: absolute;
                 left: 0px;
