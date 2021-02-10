@@ -10,6 +10,7 @@ let courseSection = (CRN) => {
         startTime : 8,
         lengthMinutes: 50,
         endTime : this.startTime + (this.lengthMinutes / 60),
+        arranged : false,
         location : "LUTR 101",
         instructor : "Someone",
         availableSeats : 24,
@@ -18,17 +19,30 @@ let courseSection = (CRN) => {
             return Math.floor(time) + ":" + ("00" + Math.floor(minutes)).slice(-2);
         },
         toString : function() {
-            return this.course + "-" + this.section + " - " + this.days + " " + this.timeString(this.startTime) + " - " 
-                + this.timeString(this.endTime);
+            if (this.arranged) {
+                return this.course + "-" + this.section + " (Arranged)";
+            } else {
+                return this.course + "-" + this.section + " - " + this.days + " " + this.timeString(this.startTime) + " - " 
+                    + this.timeString(this.endTime);
+            }
+            
         },
         equals : function(otherCourse) {
             return (this.crn === otherCourse.crn);
         },
         setTime : function(time) {
             let timeString = time.split("-");
-            this.startTime = Math.floor(parseInt(timeString[0]) / 100) + (parseInt(timeString[0]) % 100) / 60;
-            this.endTime = Math.floor(parseInt(timeString[1]) / 100) + (parseInt(timeString[1]) % 100) / 60;
-            this.lengthMinutes = (this.endTime - this.startTime) * 60;
+            if (Number.isInteger(parseInt(timeString[0]))) {
+                this.startTime = Math.floor(parseInt(timeString[0]) / 100) + (parseInt(timeString[0]) % 100) / 60;
+                this.endTime = Math.floor(parseInt(timeString[1]) / 100) + (parseInt(timeString[1]) % 100) / 60;
+                this.lengthMinutes = (this.endTime - this.startTime) * 60;
+            } else {
+                this.arranged = true;
+            }
+            
+        },
+        getSubject : function() {
+            return this.course.substring(0, 4);
         }
     };
     if (crnIsValid(CRN)) {

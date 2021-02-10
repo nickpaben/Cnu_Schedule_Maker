@@ -12,9 +12,12 @@
         <script src="searchEngine.js"></script>
         <script>
             let days = ["M", "T", "W", "R", "F"];
+            let colors = ["#90EE90", "#ADD8E6", "#D06060", "#FFFACD", "#FFA07A", 
+                "#87CEFA", "#C71585", "#DCDCDC", "#7FFFD4"];
 
             let schedule = {
                 courses: [],
+                subjects: [],
                 overlapsWithCourse: function(course) {
                     for (let i = 0; i < this.courses.length; i++) {
                         if (this.courseTimesOverlap(this.courses[i], course)) {
@@ -39,6 +42,22 @@
                         }
                     }
                     return false;
+                },
+                hasSubject: function(subject) {
+                    for (let i = 0; i < this.subjects.length; i++) {
+                        if (subject === this.subjects[i]) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                getSubjectIndex: function(subject) {
+                    for (let i = 0; i < this.subjects.length; i++) {
+                        if (subject === this.subjects[i]) {
+                            return i;
+                        }
+                    }
+                    return 0;
                 }
             };
 
@@ -125,6 +144,7 @@
                             "height": (course.lengthMinutes / 10) + "%",
                             "right": 65 - (dayOffset * 10) + "%",
                             "top": 11 + ((course.startTime - 8) * 6) + "%",
+                            "background-color": colors[schedule.getSubjectIndex(course.getSubject())],
                         },
                     }).attr('class', 'course-info').click(function() {
                         alert(
@@ -153,6 +173,9 @@
             let addCourseToSchedule = (course) => {
                 if(!schedule.overlapsWithCourse(course)) {
                     schedule.courses.push(course);
+                    if (!schedule.hasSubject(course.getSubject())) {
+                        schedule.subjects.push(course.getSubject());
+                    }
                     createCourseInfoDIV(course);
                 } else {
                     alert("Schedule overlaps!");
@@ -182,7 +205,9 @@
 
             let addResultsToContainer = (results) => {
                 let resultsContainer = document.getElementById("search-results");
-                $("search-results").empty();
+                while (resultsContainer.hasChildNodes()) {
+                    resultsContainer.removeChild(resultsContainer.lastChild);
+                }
                 $("<p/>", {
                         "css": {
                             "margin-top": "0px"
@@ -193,7 +218,6 @@
                 for (let i = 0; i < results.length; i++) {
                     let result = document.createElement("p");
                     result.innerHTML = results[i].toString();
-                    result.id = "result-" + i;
                     result.style.position = "absolute";
                     result.style.left = "15px";
                     result.style.top = 25 + ((i - 1) * 20) + "px";
@@ -208,7 +232,6 @@
             let addCourse = () => {
                 let input = document.getElementById("crn-search");
                 if (Number.isInteger(parseInt(input.value))) {
-                    console.log("o");
                     let crn = parseInt(input.value);
                     if (crnIsValid(crn)) {
                         addCourseToListing(crn);
@@ -270,7 +293,6 @@
                 position: absolute;
                 width: 9%;
                 font-size: 13px;
-                background-color: #aeaedb;
                 margin: 0.5%;
             }
 
