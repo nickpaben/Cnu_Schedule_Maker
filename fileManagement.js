@@ -51,3 +51,28 @@ let crnIsValid = (input) => {
     }
     return false;
 }
+
+let getClassDataFromCRN = (input) => {
+    let inputCRN = parseInt(input);
+    for (let i = 0; i < courseData.length; i++) {
+        let crn = courseData[i][0];
+        if (crn == inputCRN) {
+            let selectedClass = courseData[i];
+            return {
+                crn: parseInt(selectedClass[0]),
+                course: selectedClass[1],
+                section: selectedClass[2],
+                title: selectedClass[3],
+                hours: parseInt(selectedClass[4]),
+                llc: selectedClass[5],
+                days: selectedClass[7],
+                time: selectedClass[8],
+                location: selectedClass[9],
+                instructor: selectedClass[11].trim() + " " + selectedClass[10],
+                availableSeats: selectedClass[12]
+            };
+        }
+    }
+
+    return null;
+}

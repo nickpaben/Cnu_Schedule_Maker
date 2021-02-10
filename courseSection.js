@@ -27,7 +27,7 @@ let courseSection = (CRN) => {
         endTime : this.startTime + (this.lengthMinutes / 60),
         location : "LUTR 101",
         instructor : "Someone",
-        available_seats : 24,
+        availableSeats : 24,
         timeString : function(time) {
             let minutes = (time % 1) * 60;
             return Math.floor(time) + ":" + ("00" + Math.floor(minutes)).slice(-2);
