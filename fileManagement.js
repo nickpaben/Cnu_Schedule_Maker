@@ -69,7 +69,7 @@ let getClassDataFromCRN = (input) => {
                 time: selectedClass[8],
                 location: selectedClass[9],
                 instructor: selectedClass[11].trim() + " " + selectedClass[10],
-                availableSeats: selectedClass[12]
+                availableSeats: parseInt(selectedClass[12])
             };
         }
     }

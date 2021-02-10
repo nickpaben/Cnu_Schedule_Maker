@@ -174,9 +174,34 @@
                     }
 
                     let courseContainer = document.getElementById("course-listing");
-                    courseContainer.scrollTop = courseContainer.scrollHeight;
                     courseContainer.appendChild(listing);
+                    courseContainer.scrollTop = courseContainer.scrollHeight;
                     listingNo++;
+                }
+            }
+
+            let addResultsToContainer = (results) => {
+                let resultsContainer = document.getElementById("search-results");
+                $("search-results").empty();
+                $("<p/>", {
+                        "css": {
+                            "margin-top": "0px"
+                        },
+                        "html": "Search results (" + results.length + "):"
+                    }).appendTo(resultsContainer);
+                
+                for (let i = 0; i < results.length; i++) {
+                    let result = document.createElement("p");
+                    result.innerHTML = results[i].toString();
+                    result.id = "result-" + i;
+                    result.style.position = "absolute";
+                    result.style.left = "15px";
+                    result.style.top = 25 + ((i - 1) * 20) + "px";
+                    result.onclick = () => {
+                        addCourseToListing(results[i].crn);
+                    }
+                    resultsContainer.appendChild(result);
+                    resultsContainer.scrollTop = resultsContainer.scrollHeight;
                 }
             }
 
@@ -190,12 +215,12 @@
                     }
                 } else {
                     let results = searchCourses(input.value);
-                    console.log(results);
                     if (results.length == 1) {
                         let CRN = results[0].crn;
+                        console.log(Number.isInteger(CRN));
                         addCourseToListing(CRN);
                     } else if (results.length >= 1) {
-
+                        addResultsToContainer(results);
                     }
                 }
             }
@@ -219,10 +244,21 @@
                 border-right: 1px solid #44449e;
             }
 
+            #search-results {
+                position: absolute;
+                left: 15px;
+                top: 15%;
+                width: 90%;
+                height: 25%;
+                border: 1px solid #44449e;
+                border-radius: 2px;
+                overflow: auto;
+            }
+
             #course-listing {
                 position: absolute;
                 left: 15px;
-                top: 40%;
+                top: 45%;
                 width: 90%;
                 height: 25%;
                 border: 1px solid #44449e;
@@ -246,6 +282,7 @@
         <div id = "course-container">
             Enter the CRN or registration name of your class here: <input id="crn-search"></input>
             <button id="search_courses" onclick="addCourse()">Search</button>
+            <div id = "search-results"></div>
             <div id = "course-listing">
                 Your courses:
             </div>
