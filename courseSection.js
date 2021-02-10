@@ -39,9 +39,26 @@ let courseSection = (CRN) => {
         equals : function(otherCourse) {
             return (this.crn === otherCourse.crn);
         },
+        setTime : function(time) {
+            let timeString = time.split("-");
+            this.startTime = Math.floor(parseInt(timeString[0]) / 100) + (parseInt(timeString[0]) % 100) / 60;
+            this.endTime = Math.floor(parseInt(timeString[1]) / 100) + (parseInt(timeString[1]) % 100) / 60;
+            this.lengthMinutes = (this.endTime - this.startTime) * 60;
+        }
     };
     if (crnIsValid(CRN)) {
+        let data = getClassDataFromCRN(CRN);
         course.crn = CRN;
+        course.course = data.course;
+        course.section = data.section;
+        course.title = data.title;
+        course.hours = data.hours;
+        course.llc = data.llc;
+        course.days = data.days;        
+        course.setTime(data.time);
+        course.location = data.location;
+        course.instructor = data.instructor;
+        course.availableSeats = data.availableSeats;
     }
     return course;
 }
