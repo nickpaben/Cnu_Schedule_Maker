@@ -1,18 +1,3 @@
-/** from File_Management import *
-
-
-class Course_Section:
-    # Constructor for Course_Section with CRN input - if the CRN is valid, the function sets the rest of
-    # the class's information based on the CRN.
-    def __init__(self, crn):
-        if crn_is_valid(crn):
-            self.crn = crn
-            self.course, self.section, self.title, self.hours, self.llc, self.days, \
-                self.time, self.location, self.instructor, self.available_seats = get_class_data_from_crn(crn)
-        else:
-            self.__set_defaults__()
-**/
-
 let courseSection = (CRN) => {
     let course = {
         crn : 0000,

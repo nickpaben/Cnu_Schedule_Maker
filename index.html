@@ -8,7 +8,8 @@
         <!-- Using jQuery and jQuery CSV -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="fileManagement.js"></script>
-        <script src = "courseSection.js"></script>
+        <script src="courseSection.js"></script>
+        <script src="searchEngine.js"></script>
         <script>
             let days = ["M", "T", "W", "R", "F"];
 
@@ -181,8 +182,22 @@
 
             let addCourse = () => {
                 let input = document.getElementById("crn-search");
-                let CRN = input.value;
-                addCourseToListing(CRN);
+                if (Number.isInteger(parseInt(input.value))) {
+                    console.log("o");
+                    let crn = parseInt(input.value);
+                    if (crnIsValid(crn)) {
+                        addCourseToListing(crn);
+                    }
+                } else {
+                    let results = searchCourses(input.value);
+                    console.log(results);
+                    if (results.length == 1) {
+                        let CRN = results[0].crn;
+                        addCourseToListing(CRN);
+                    } else if (results.length >= 1) {
+
+                    }
+                }
             }
 
         </script>
@@ -229,7 +244,7 @@
             }
         </style>
         <div id = "course-container">
-            Enter the CRN or registration name of your class here: <input id="crn-search" type="number"></input>
+            Enter the CRN or registration name of your class here: <input id="crn-search"></input>
             <button id="search_courses" onclick="addCourse()">Search</button>
             <div id = "course-listing">
                 Your courses:
