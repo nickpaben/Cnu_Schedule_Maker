@@ -25,6 +25,19 @@ let getClassesByName = (className) => {
     return foundCourses;
 }
 
+let filterClassesByDay = (courses, dayString) => {
+    filteredCourses = []
+    for (let i = 0; i < courses.length; i++) {
+        let days = courses[i].days;
+        for (let j = 0; j < dayString.length; j++) {
+            if (days.indexOf(dayString.charAt(j)) != -1) {
+                filteredCourses.push(courses[i]);
+            }
+        }
+    }
+    return filteredCourses;
+}
+
 /**
  * 
 # Iterates through courses provided and returns only the courses containing days in day_string.
