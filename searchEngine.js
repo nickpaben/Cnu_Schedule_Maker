@@ -38,20 +38,23 @@ let filterClassesByDay = (courses, dayString) => {
     return filteredCourses;
 }
 
+let filterClassesByLLC = (courses, llcArea = "") => {
+    for (let i = 0; i < courses.length; i++) {
+        let course = courses[i];
+        if (llcArea !== "") {
+            if (course.llc.trim() == llcArea) {
+                filteredCourses.push(course);
+            }
+        } else {
+            if (course.llc.trim() !== "") {
+                filteredCourses.push(course);
+            }
+        }
+    }
+    return filteredCourses;
+}
 /**
  * 
-# Iterates through courses provided and returns only the courses containing days in day_string.
-# day_string is a string containing all of the days to filter in - an example would be 'MTWF'.
-# Using this string, the program should return all of the classes provided except for ones only on Thursday (R).
-def filter_classes_by_day(courses, day_string):
-    filtered_courses = []
-    for course in courses:
-        for day in day_string:
-            if day in course.days:
-                filtered_courses.append(course)
-                break
-    return filtered_courses
-
 
 # Iterates through courses and returns only classes that satisfy an LLC.
 # If llc_area is specified, the function will return only courses with that specific LLC (ex. AINW).
