@@ -238,6 +238,11 @@
                     }
                 } else {
                     let results = searchCourses(input.value);
+                    let checkFilterOpen = document.getElementById("check-filter-open");
+                    if (checkFilterOpen.checked) {
+                        results = filterOpenClasses(results);
+                    }
+                    
                     if (results.length == 1) {
                         let CRN = results[0].crn;
                         console.log(Number.isInteger(CRN));
@@ -302,7 +307,8 @@
             }
         </style>
         <div id = "course-container">
-            Enter the CRN or registration name of your class here: <input id="crn-search"></input>
+            Enter the CRN or registration name of your class here: <input id="crn-search"></input><br>
+            <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>
             <button id="search_courses" onclick="addCourse()">Search</button>
             <div id = "search-results"></div>
             <div id = "course-listing">

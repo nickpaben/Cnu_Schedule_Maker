@@ -97,14 +97,4 @@ def filter_classes_by_time(courses, start, end):
         if int(start_time) >= int(start) and int(end) >= int(end_time):
             filtered_courses.append(course)
     return filtered_courses
-
-
-# Iterates through courses and returns only classes with open slots left.
-def filter_open_classes(courses):
-    filtered_courses = []
-    for course in courses:
-        if int(course.available_seats) > 0:
-            filtered_courses.append(course)
-    return filtered_courses
-
  */
