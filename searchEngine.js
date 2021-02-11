@@ -26,7 +26,7 @@ let getClassesByName = (className) => {
 }
 
 let filterClassesByDay = (courses, dayString) => {
-    filteredCourses = []
+    filteredCourses = [];
     for (let i = 0; i < courses.length; i++) {
         let days = courses[i].days;
         for (let j = 0; j < dayString.length; j++) {
@@ -39,6 +39,7 @@ let filterClassesByDay = (courses, dayString) => {
 }
 
 let filterClassesByLLC = (courses, llcArea = "") => {
+    filteredCourses = [];
     for (let i = 0; i < courses.length; i++) {
         let course = courses[i];
         if (llcArea !== "") {
@@ -53,23 +54,20 @@ let filterClassesByLLC = (courses, llcArea = "") => {
     }
     return filteredCourses;
 }
+
+let filterOpenClasses = (courses) => {
+    let filteredCourses = [];
+    for (let i = 0; i < courses.length; i++) {
+        let course = courses[i];
+        if (course.availableSeats > 0) {
+            filteredCourses.push(course);
+        }
+    }
+    return filteredCourses;
+}
+
 /**
  * 
-
-# Iterates through courses and returns only classes that satisfy an LLC.
-# If llc_area is specified, the function will return only courses with that specific LLC (ex. AINW).
-def filter_classes_by_llc(courses, llc_area=""):
-    filtered_courses = []
-    for course in courses:
-        if llc_area != "":
-            if course.llc.strip() == llc_area.strip():
-                filtered_courses.append(course)
-        else:
-            if course.llc.strip() != "":
-                filtered_courses.append(course)
-
-    return filtered_courses
-
 
 # Iterates through courses and returns only classes with the teacher if excluding_teacher = False.
 # If excluding_teacher = True, the function filters out classes with the teacher and returns everything else.
