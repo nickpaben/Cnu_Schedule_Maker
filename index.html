@@ -256,56 +256,7 @@
         </script>
         <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
         accept=".csv">
-        <style>
-            #csvFileInput {
-                position: absolute;
-                top: 5px;
-                left: 40%;
-            }
-
-            #course-container {
-                position: absolute;
-                left: 0px;
-                top: 0px;
-                width: 25%;
-                height: 100%;
-                border-right: 1px solid #44449e;
-            }
-
-            #search-results {
-                position: absolute;
-                left: 15px;
-                top: 15%;
-                width: 90%;
-                height: 25%;
-                border: 1px solid #44449e;
-                border-radius: 2px;
-                overflow: auto;
-            }
-
-            #course-listing {
-                position: absolute;
-                left: 15px;
-                top: 45%;
-                width: 90%;
-                height: 25%;
-                border: 1px solid #44449e;
-                border-radius: 2px;
-                overflow: auto;
-            }
-
-            .course-info {
-                position: absolute;
-                width: 9%;
-                font-size: 13px;
-                margin: 0.5%;
-            }
-
-            #cnu-logo {
-                position: absolute;
-                right: 0px;
-            }
-        </style>
+        <link rel="stylesheet" href="stylesheet.css">
         <div id = "course-container">
             Enter the CRN or registration name of your class here: <input id="crn-search"></input><br>
             <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>

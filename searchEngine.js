@@ -84,36 +84,3 @@ let filterClassesByTeacher = (courses, teacherName, excludingTeacher = false) =>
     }
     return filteredCourses;
 }
-
-/**
- * 
-
-# Iterates through courses and returns only classes with the teacher if excluding_teacher = False.
-# If excluding_teacher = True, the function filters out classes with the teacher and returns everything else.
-def filter_classes_by_teacher(courses, teacher_name, excluding_teacher=False):
-    filtered_courses = []
-    for course in courses:
-        teacher_names = course.instructor.split(";")
-        is_teaching = False
-
-        for name in teacher_names:
-            if teacher_name.strip() in name.strip():
-                is_teaching = True
-        if is_teaching and not excluding_teacher:
-            filtered_courses.append(course)
-        if not is_teaching and excluding_teacher:
-            filtered_courses.append(course)
-    for f in filtered_courses:
-        print(f)
-    return filtered_courses
-
-
-# Iterates through courses and returns only classes within the time range start - end.
-def filter_classes_by_time(courses, start, end):
-    filtered_courses = []
-    for course in courses:
-        start_time, end_time = course.time.split("-")
-        if int(start_time) >= int(start) and int(end) >= int(end_time):
-            filtered_courses.append(course)
-    return filtered_courses
- */
