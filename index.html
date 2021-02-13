@@ -237,6 +237,9 @@
                         addCourseToListing(crn);
                     }
                 } else {
+                    if (courseData.length == 0) { 
+                        alert("You need to upload a schedule of classes (.csv file) before you can search!");
+                    }
                     let results = searchCourses(input.value);
                     let checkFilterOpen = document.getElementById("check-filter-open");
                     if (checkFilterOpen.checked) {
@@ -253,18 +256,30 @@
                 }
             }
 
+            let toggleFilterContainer = () => {
+                $("#filter-container").toggle();
+            }
+
+            $(document).ready(function(){
+                $("#filter-container").toggle();
+            });
         </script>
         <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
         accept=".csv">
         <link rel="stylesheet" href="stylesheet.css">
         <div id = "course-container">
             Enter the CRN or registration name of your class here: <input id="crn-search"></input><br>
-            <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>
+            <button id="toggle-filter" onclick="toggleFilterContainer()">Set search filters</button><br>
             <button id="search_courses" onclick="addCourse()">Search</button>
             <div id = "search-results"></div>
             <div id = "course-listing">
                 Your courses:
             </div>
+        </div>
+        <div id = "filter-container">
+            Filters:<br>
+            <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>
+            <button id="exit-filter-popup" onclick="toggleFilterContainer()">X</button>
         </div>
     </body>
 </html>

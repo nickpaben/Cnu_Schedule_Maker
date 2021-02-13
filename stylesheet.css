@@ -1,7 +1,7 @@
 #csvFileInput {
     position: absolute;
     top: 5px;
-    left: 40%;
+    left: 70%;
 }
 
 #course-container {
@@ -42,7 +42,18 @@
     margin: 0.5%;
 }
 
-#cnu-logo {
+#filter-container {
     position: absolute;
+    top: 0px;
+    left: 25%;
+    width: 25%;
+    height: 35%;
+    background-color: white;
+    border: 1px solid #44449e;
+}
+
+#exit-filter-popup {
+    position: absolute;
+    top: 0px;
     right: 0px;
 }
