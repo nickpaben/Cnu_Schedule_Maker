@@ -66,6 +66,25 @@ let filterOpenClasses = (courses) => {
     return filteredCourses;
 }
 
+let filterClassesByTeacher = (courses, teacherName, excludingTeacher = false) => {
+    let filteredCourses = [];
+    for (let i = 0; i < courses.length; i++) {
+        let course = courses[i];
+        let teacherNames = course.instructor.split(";");
+        let isTeaching = false;
+
+        for (let j = 0; j < teacherNames.length; j++) {
+            if (teacherNames[j].indexOf(teacherName) != -1) {
+                isTeaching = true;
+            }
+        }
+        if (isTeaching && !excludingTeacher || !isTeaching && excludingTeacher) {
+            filteredCourses.push(course);
+        }
+    }
+    return filteredCourses;
+}
+
 /**
  * 
 
