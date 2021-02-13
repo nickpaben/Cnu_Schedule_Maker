@@ -58,7 +58,15 @@
                         }
                     }
                     return 0;
-                }
+                },
+                getCourseIndex: function(crn) {
+                    for (let i = 0; i < this.courses.length; i++) {
+                        if (crn === this.courses[i].crn) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                },
             };
 
             let listingNo = 1;
@@ -146,14 +154,7 @@
                             "top": 11 + ((course.startTime - 8) * 6) + "%",
                             "background-color": colors[schedule.getSubjectIndex(course.getSubject())],
                         },
-                    }).attr('class', 'course-info').click(function() {
-                        alert(
-                                course.course + "-" + course.section + "\n"
-                                    + course.days + " " + course.timeString(course.startTime) + " - " 
-                                    + course.timeString(course.endTime) + "\n"
-                                    + course.location + "\n" + course.llc
-                            );
-                    }).appendTo("body");
+                    }).attr("id","course-info-" + course.crn + "-" + i).attr('class', 'course-info').appendTo("body");
                     $("<p/>", {
                         "css": {
                             "margin-top": "5px",
@@ -167,7 +168,30 @@
                         },
                         "html": course.timeString(course.startTime)
                     }).appendTo(container);
+                    $("<button/>", {
+                        "css": {
+                            "position": "absolute",
+                            "right": "0%",
+                            "top": "0%",
+                        },
+                        "html": "X",
+                        
+                    }).click(function() {
+                        removeCourseFromSchedule(course.crn);
+                    }).appendTo(container);
                 }
+            }
+
+            let removeCourseFromSchedule = (crn) => {
+                let course = getClassDataFromCRN(crn);
+                let days = course.days;
+                for (let i = 0; i < days.length; i++) {
+                    let id = "course-info-" + crn + "-" + i;
+                    document.getElementById(id).remove();
+                }
+
+                let courseIndex = schedule.getCourseIndex(crn);
+                if (courseIndex !== -1) { schedule.courses.splice(courseIndex, 1); }
             }
 
             let addCourseToSchedule = (course) => {
@@ -297,7 +321,7 @@
             <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>
             <input id="check-filter-days" type="checkbox">Filter classes by days: </input><input id="filter-days"></input><br>
             <input id="check-filter-teacher" type="checkbox">Filter classes by teacher: </input><input id="filter-teacher"></input><br>
-            <input id="check-exclude" type="checkbox">Filter out these teachers</input><br>
+            <input id="check-exclude" type="checkbox">Filter out this teacher</input><br>
             <input id="check-filter-llc" type="checkbox">Filter classes by LLC: </input><input id="filter-llc"></input><br>
             <button id="exit-filter-popup" onclick="toggleFilterContainer()">X</button>
         </div>
