@@ -250,6 +250,17 @@
                         let filter = document.getElementById("filter-days").value;
                         results = filterClassesByDay(results, filter);
                     }
+                    let checkFilterTeacher = document.getElementById("check-filter-teacher");
+                    if (checkFilterTeacher.checked) {
+                        let filter = document.getElementById("filter-teacher").value;
+                        let excluding = document.getElementById("check-exclude").checked;
+                        results = filterClassesByTeacher(results, filter, excluding);
+                    }
+                    let checkFilterLLC = document.getElementById("check-filter-llc");
+                    if (checkFilterLLC.checked) {
+                        let filter = document.getElementById("filter-llc").value;
+                        results = filterClassesByDay(results, filter);
+                    }
                     
                     if (results.length == 1) {
                         let CRN = results[0].crn;
@@ -285,6 +296,9 @@
             Filters:<br>
             <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>
             <input id="check-filter-days" type="checkbox">Filter classes by days: </input><input id="filter-days"></input><br>
+            <input id="check-filter-teacher" type="checkbox">Filter classes by teacher: </input><input id="filter-teacher"></input><br>
+            <input id="check-exclude" type="checkbox">Filter out these teachers</input><br>
+            <input id="check-filter-llc" type="checkbox">Filter classes by LLC: </input><input id="filter-llc"></input><br>
             <button id="exit-filter-popup" onclick="toggleFilterContainer()">X</button>
         </div>
     </body>
