@@ -245,6 +245,11 @@
                     if (checkFilterOpen.checked) {
                         results = filterOpenClasses(results);
                     }
+                    let checkFilterDays = document.getElementById("check-filter-days");
+                    if (checkFilterDays.checked) {
+                        let filter = document.getElementById("filter-days").value;
+                        results = filterClassesByDay(results, filter);
+                    }
                     
                     if (results.length == 1) {
                         let CRN = results[0].crn;
@@ -279,6 +284,7 @@
         <div id = "filter-container">
             Filters:<br>
             <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>
+            <input id="check-filter-days" type="checkbox">Filter classes by days: </input><input id="filter-days"></input><br>
             <button id="exit-filter-popup" onclick="toggleFilterContainer()">X</button>
         </div>
     </body>

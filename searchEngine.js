@@ -41,6 +41,7 @@ let filterClassesByDay = (courses, dayString) => {
         for (let j = 0; j < dayString.length; j++) {
             if (days.indexOf(dayString.charAt(j)) != -1) {
                 filteredCourses.push(courses[i]);
+                j = dayString.length;
             }
         }
     }
