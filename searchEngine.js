@@ -6,7 +6,16 @@ let searchCourses = (query) => {
             foundCourses.append(courseSection(crn));
         }
     } else {
-        return getClassesByName(query);
+        if (query.indexOf(";") === -1) {
+            return getClassesByName(query);
+        } else {
+            let subqueries = query.split(";");
+            for (let i = 0; i < subqueries.length; i++) {
+                subqueries[i] = subqueries[i].trim();
+                console.log(subqueries[i] + " " + i);
+                foundCourses = foundCourses.concat(getClassesByName(subqueries[i]));
+            }
+        }
     }
     return foundCourses;
 }
