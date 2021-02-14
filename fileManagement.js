@@ -26,9 +26,15 @@ let processCSVData = (data) => {
     for (let i = 0; i < dataLines.length; i++) {
         dataLines[i] = dataLines[i].replaceAll('\"', '');
         let currentLine = dataLines[i].split(',');
+        let lastValidIndex = 0;
         let tempData = [];
         for (let j = 0; j < currentLine.length; j++) {
-            tempData.push(currentLine[j]);
+            if (currentLine[j][0] == " " && currentLine[j][1] != " ") {
+                tempData[lastValidIndex] = tempData[lastValidIndex] + "," + currentLine[j];
+            } else {
+                lastValidIndex = j;
+                tempData.push(currentLine[j]);
+            }
         }
         courseData.push(tempData);
     }
@@ -68,8 +74,8 @@ let getClassDataFromCRN = (input) => {
                 days: selectedClass[7],
                 time: selectedClass[8],
                 location: selectedClass[9],
-                instructor: selectedClass[11].trim() + " " + selectedClass[10],
-                availableSeats: parseInt(selectedClass[12])
+                instructors: selectedClass[10],
+                availableSeats: parseInt(selectedClass[11])
             };
         }
     }

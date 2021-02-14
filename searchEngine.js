@@ -80,7 +80,7 @@ let filterClassesByTeacher = (courses, teacherName, excludingTeacher = false) =>
     let filteredCourses = [];
     for (let i = 0; i < courses.length; i++) {
         let course = courses[i];
-        let teacherNames = course.instructor.split(";");
+        let teacherNames = course.instructors.split(";");
         let isTeaching = false;
 
         for (let j = 0; j < teacherNames.length; j++) {

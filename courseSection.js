@@ -12,7 +12,7 @@ let courseSection = (CRN) => {
         endTime : this.startTime + (this.lengthMinutes / 60),
         arranged : false,
         location : "LUTR 101",
-        instructor : "Someone",
+        instructors : "Someone",
         availableSeats : 24,
         timeString : function(time) {
             let minutes = (time % 1) * 60;
@@ -56,7 +56,7 @@ let courseSection = (CRN) => {
         course.days = data.days;        
         course.setTime(data.time);
         course.location = data.location;
-        course.instructor = data.instructor;
+        course.instructors = data.instructors;
         course.availableSeats = data.availableSeats;
     }
     return course;
