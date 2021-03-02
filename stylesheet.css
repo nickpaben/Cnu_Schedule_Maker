@@ -1,3 +1,9 @@
+#instructions-link {
+    position: absolute;
+    top: 5px;
+    left: 35%;
+}
+
 #csvFileInput {
     position: absolute;
     top: 5px;
@@ -13,10 +19,15 @@
     border-right: 1px solid #44449e;
 }
 
+#course-container p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 #search-results {
     position: absolute;
     left: 15px;
-    top: 20%;
+    top: 45%;
     width: 90%;
     height: 25%;
     border: 1px solid #44449e;
@@ -40,22 +51,6 @@
     width: 9%;
     font-size: 13px;
     margin: 0.5%;
-}
-
-#filter-container {
-    position: absolute;
-    top: 0px;
-    left: 25%;
-    width: 25%;
-    height: 35%;
-    background-color: white;
-    border: 1px solid #44449e;
-}
-
-#exit-filter-popup {
-    position: absolute;
-    top: 0px;
-    right: 0px;
 }
 
 #filter-days {

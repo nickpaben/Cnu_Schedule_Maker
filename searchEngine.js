@@ -3,7 +3,7 @@ let searchCourses = (query) => {
     if (Number.isInteger(parseInt(query))) {
         let crn = parseInt(query);
         if (crnIsValid(crn)) {
-            foundCourses.append(courseSection(crn));
+            foundCourses.push(courseSection(crn));
         }
     } else {
         if (query.indexOf(";") === -1) {

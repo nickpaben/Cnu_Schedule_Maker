@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-    <title>Schedule Maker Test Demo</title>
-    <head>
-        <div id = "header-bar">
-        </div>
-    </head>
+    <title>CNU Course Charter</title>
     <body>
         <!-- Using jQuery and jQuery CSV -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -207,26 +203,6 @@
                 
             }
 
-            let addCourseToListing = (crn) => {
-                if (crnIsValid(crn)) {
-                    let course = courseSection(crn);
-                    let listing = document.createElement("p");
-                    listing.innerHTML = course.toString();
-                    listing.id = "listing-" + listingNo;
-                    listing.style.position = "absolute";
-                    listing.style.left = "15px";
-                    listing.style.top = 15 + ((listingNo - 1) * 20) + "px";
-                    listing.onclick = () => {
-                        addCourseToSchedule(course);
-                    }
-
-                    let courseContainer = document.getElementById("course-listing");
-                    courseContainer.appendChild(listing);
-                    courseContainer.scrollTop = courseContainer.scrollHeight;
-                    listingNo++;
-                }
-            }
-
             let addResultsToContainer = (results) => {
                 let resultsContainer = document.getElementById("search-results");
                 while (resultsContainer.hasChildNodes()) {
@@ -241,12 +217,13 @@
                 
                 for (let i = 0; i < results.length; i++) {
                     let result = document.createElement("p");
+                    result.id = "result-" + i;
                     result.innerHTML = results[i].toString();
                     result.style.position = "absolute";
                     result.style.left = "15px";
                     result.style.top = 25 + ((i - 1) * 20) + "px";
                     result.onclick = () => {
-                        addCourseToListing(results[i].crn);
+                        addCourseToSchedule(results[i]);
                     }
                     resultsContainer.appendChild(result);
                     resultsContainer.scrollTop = resultsContainer.scrollHeight;
@@ -257,9 +234,8 @@
                 let input = document.getElementById("crn-search");
                 if (Number.isInteger(parseInt(input.value))) {
                     let crn = parseInt(input.value);
-                    if (crnIsValid(crn)) {
-                        addCourseToListing(crn);
-                    }
+                    let results = searchCourses(input.value);
+                    addResultsToContainer(results);
                 } else {
                     if (courseData.length == 0) { 
                         alert("You need to upload a schedule of classes (.csv file) before you can search!");
@@ -286,44 +262,24 @@
                         results = filterClassesByDay(results, filter);
                     }
                     
-                    if (results.length == 1) {
-                        let CRN = results[0].crn;
-                        console.log(Number.isInteger(CRN));
-                        addCourseToListing(CRN);
-                    } else if (results.length >= 1) {
-                        addResultsToContainer(results);
-                    }
+                    addResultsToContainer(results);
                 }
             }
-
-            let toggleFilterContainer = () => {
-                $("#filter-container").toggle();
-            }
-
-            $(document).ready(function(){
-                $("#filter-container").toggle();
-            });
         </script>
+        <a id="instructions-link" href="instructions.html" target="_blank">Click here for instructions on how to use this program.</a>
         <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
         accept=".csv">
         <link rel="stylesheet" href="stylesheet.css">
         <div id = "course-container">
-            Enter the CRN or registration name of your class here: <input id="crn-search"></input><br>
-            <button id="toggle-filter" onclick="toggleFilterContainer()">Set search filters</button><br>
-            <button id="search_courses" onclick="addCourse()">Search</button>
-            <div id = "search-results"></div>
-            <div id = "course-listing">
-                Your courses:
-            </div>
-        </div>
-        <div id = "filter-container">
+            Enter the CRN or registration name of your class here: <input id="crn-search"></input><br><br>
             Filters:<br>
-            <input id="check-filter-open" type="checkbox">Exclude classes with no available seats</input><br>
+            <input id="check-filter-open" type="checkbox" checked="true">Exclude classes with no available seats</input><br>
             <input id="check-filter-days" type="checkbox">Filter classes by days: </input><input id="filter-days"></input><br>
             <input id="check-filter-teacher" type="checkbox">Filter classes by teacher: </input><input id="filter-teacher"></input><br>
             <input id="check-exclude" type="checkbox">Filter out this teacher</input><br>
             <input id="check-filter-llc" type="checkbox">Filter classes by LLC: </input><input id="filter-llc"></input><br>
-            <button id="exit-filter-popup" onclick="toggleFilterContainer()">X</button>
+            <button id="search_courses" onclick="addCourse()">Search</button>
+            <div id = "search-results"></div>
         </div>
     </body>
 </html>
