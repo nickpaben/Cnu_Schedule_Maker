@@ -2,10 +2,25 @@ let courseData = [];
 
 let handleFiles = (files) => {
     if (window.FileReader) {
+        alertUserAboutOutdatedFile(files[0]);
         getAsText(files[0]);
     } else {
         alert("The FileReader API is not supported in this browser.");
     }
+}
+
+let alertUserAboutOutdatedFile = (file) => {
+    let date = new Date(file.lastModified);
+    let today = new Date();
+
+    let timeDifference = today.getTime() - date.getTime();
+
+    let MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+    let dayDifference = timeDifference / MILLISECONDS_PER_DAY;
+
+    if (dayDifference >= 5) {
+        alert("Your CSV schedule of classes is more than 5 days old, and may be outdated. Consider using an updated file.");
+    } 
 }
 
 let getAsText = (file) => {
